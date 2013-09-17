@@ -12,7 +12,7 @@
 	$cachetime = 7200;
 	
 	// Server path to parent folder
-	$cachepath = "/ip/iuwebdev/www/arc2/social-media/twitter/_php/twitter/";
+	$cachepath = "/ip/iuwebdev/www/arc2/social-media/twitter/_php/twitter/cache.txt";
 	
 	// CREATE A TWITTER APPLICATION TO GET THE FOLLOWING VARIABLES (https://dev.twitter.com/apps)
 	
@@ -31,14 +31,13 @@
 
 	// ================= STOP EDITING! ===================== //
 	
-	$cachefile = "cache.txt";
-    if(file_exists($cachefile) && time() < filemtime($cachefile) + $cachetime){
-		$json = file_get_contents($cachefile,0,null,null);
+    if(file_exists($cachepath) && time() < filemtime($cachepath) + $cachetime){
+		$json = file_get_contents($cachepath,0,null,null);
 		$json_output = json_decode($json, true);
 	}
 	else {
-		session_start();
 		require_once("twitteroauth/twitteroauth.php"); // Path to twitteroauth library relative to this file
+		session_start();
 		function getConnectionWithAccessToken($cons_key, $cons_secret, $oauth_token, $oauth_token_secret){
 			$connection = new TwitterOAuth($cons_key, $cons_secret, $oauth_token, $oauth_token_secret);
 			return $connection;
@@ -47,7 +46,7 @@
 		$tweets = $connection->get("https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=".$twitteruser."&count=".$notweets);
 		$json = json_encode($tweets);
 		$json_output = json_decode($json, true);
-		$fp = fopen($cachepath.$cachefile, 'w');
+		$fp = fopen($cachepath, 'w');
 		fwrite($fp, $json);
 		fclose($fp);
 	}

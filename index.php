@@ -27,9 +27,10 @@
 	.twitter-custom-feed li a {
 		color: #990000;
 		text-decoration: none;
-	}	
-	.twitter-custom-feed li span {
-		display: block;	
+	}
+	.twitter-custom-feed li a:hover,
+	.twitter-custom-feed li a:focus {
+		text-decoration: underline;	
 	}
 </style>
 </head>

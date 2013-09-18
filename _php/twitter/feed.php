@@ -3,13 +3,13 @@
 	// ================= EDIT THE VARIABLES BELOW ===================== //
 	
 	// Twitter username
-	$twitteruser = "iucomm";
+	$twitteruser = "indianauniv";
 		
 	// Number of Tweets to display
 	$notweets = 15;
 
 	// Length of time between renewing the cache file in seconds (2 hours in this case)
-	$cachetime = 7200;
+	$cachetime = 0;
 	
 	// Server path to parent folder
 	$cachepath = "/ip/iuwebdev/www/arc2/social-media/twitter/_php/twitter/cache.txt";
@@ -27,6 +27,12 @@
 	
 	  // OAtuh settings - Access Token Secret
 	  $accesstokensecret = "6WSkGC2G24MFrRD7KaQzTexJ7pJ4vWQLMejlsB4bhM";
+	
+	// Default timezone (Reference: http://www.php.net/manual/en/timezones.php)
+	$timezone = "America/Indiana/Indianapolis";
+	
+	// Date format (Reference: http://php.net/manual/en/function.date.php) 
+	$dateformat = "l, F, j, g:ia";
 	
 
 	// ================= STOP EDITING! ===================== //
@@ -94,11 +100,12 @@
 			$tweet_text_clean .= $tweet_word." ";
 		}
 		echo "<li>";
-		echo "<span class='twitter-custom-feed-tweet'>".$tweet_text_clean."</span>";
-		echo "<span class='twitter-custom-feed-date'>".date("l, F, j, g:ia",strtotime($tweet[created_at]))."</span>";
+		echo "<span class='twitter-custom-feed-tweet'>".$tweet_text_clean."</span><br />";
+		date_default_timezone_set($timezone);
+		echo "<span class='twitter-custom-feed-date'>".date($dateformat,strtotime($tweet[created_at]))."</span><br />";
 		echo "<span class='twitter-custom-feed-interact'>";
-		echo "<a href='https://twitter.com/intent/tweet?in_reply_to=".$tweet[id_str]."' target='_blank' class='twitter-custom-feed-reply'>Reply</a> • ";
-		echo "<a href='http://twitter.com/intent/retweet?tweet_id=".$tweet[id_str]."' target='_blank' class='twitter-custom-feed-retweet'>Retweet</a> • ";
+		echo "<a href='https://twitter.com/intent/tweet?in_reply_to=".$tweet[id_str]."' target='_blank' class='twitter-custom-feed-reply'>Reply</a> &#149; ";
+		echo "<a href='http://twitter.com/intent/retweet?tweet_id=".$tweet[id_str]."' target='_blank' class='twitter-custom-feed-retweet'>Retweet</a> &#149; ";
 		echo "<a href='http://twitter.com/intent/favorite?tweet_id=".$tweet[id_str]."' target='_blank' class='twitter-custom-feed-favorite'>Favorite</a>";
 		echo "</span>";
 		echo "</li>";
